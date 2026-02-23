@@ -5,7 +5,16 @@
  * the number twice.
  */
 export function bookEndList(numbers: number[]): number[] {
-    return numbers;
+    const first_and_last: number[] = [...numbers];
+    if (first_and_last.length === 0) {
+        return first_and_last;
+    }
+    if (first_and_last.length === 1) {
+        const doubled_array = [...first_and_last, ...first_and_last];
+        return doubled_array;
+    }
+    first_and_last.splice(1, numbers.length - 2);
+    return first_and_last;
 }
 
 /**
@@ -13,7 +22,10 @@ export function bookEndList(numbers: number[]): number[] {
  * number has been tripled (multiplied by 3).
  */
 export function tripleNumbers(numbers: number[]): number[] {
-    return numbers;
+    const tripled_numbers: number[] = numbers.map(
+        (number: number): number => number * 3,
+    );
+    return tripled_numbers;
 }
 
 /**
@@ -21,7 +33,10 @@ export function tripleNumbers(numbers: number[]): number[] {
  * the number cannot be parsed as an integer, convert it to 0 instead.
  */
 export function stringsToIntegers(numbers: string[]): number[] {
-    return [];
+    const strings_to_integers: number[] = numbers.map(
+        (number: string): number => parseInt(number) || 0,
+    );
+    return strings_to_integers;
 }
 
 /**
@@ -32,7 +47,13 @@ export function stringsToIntegers(numbers: string[]): number[] {
  */
 // Remember, you can write functions as lambdas too! They work exactly the same.
 export const removeDollars = (amounts: string[]): number[] => {
-    return [];
+    const amounts_without_dollars: string[] = amounts.map(
+        (amount: string): string => amount.replace("$", ""),
+    );
+    const amounts_to_integers: number[] = amounts_without_dollars.map(
+        (amount: string): number => parseInt(amount) || 0,
+    );
+    return amounts_to_integers;
 };
 
 /**
@@ -41,7 +62,14 @@ export const removeDollars = (amounts: string[]): number[] => {
  * in question marks ("?").
  */
 export const shoutIfExclaiming = (messages: string[]): string[] => {
-    return [];
+    const uppercased_exclamations: string[] = messages.map(
+        (message: string): string =>
+            message.endsWith("!") ? message.toUpperCase() : message,
+    );
+    const remove_questions: string[] = uppercased_exclamations.filter(
+        (message: string): boolean => !message.endsWith("?"),
+    );
+    return remove_questions;
 };
 
 /**
@@ -49,7 +77,10 @@ export const shoutIfExclaiming = (messages: string[]): string[] => {
  * 4 letters long.
  */
 export function countShortWords(words: string[]): number {
-    return 0;
+    const short_words_only: string[] = words.filter(
+        (word: string): boolean => word.length < 4,
+    );
+    return short_words_only.length;
 }
 
 /**
@@ -58,7 +89,12 @@ export function countShortWords(words: string[]): number {
  * then return true.
  */
 export function allRGB(colors: string[]): boolean {
-    return false;
+    return colors.length === 0 ?
+            true
+        :   colors.every(
+                (color: string): boolean =>
+                    color === "red" || color === "blue" || color === "green",
+            );
 }
 
 /**
@@ -69,7 +105,14 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    return "";
+    const sum: number = addends.reduce(
+        (running_total: number, addend: number): number =>
+            running_total + addend,
+        0,
+    );
+    const right_hand_expression: string =
+        addends.length === 0 ? "0" : addends.join("+");
+    return `${sum}=${right_hand_expression}`;
 }
 
 /**
@@ -82,5 +125,22 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    return [];
+    const first_neg_num_index: number = values.findIndex(
+        (value: number): boolean => value < 0,
+    );
+
+    const values_before_neg_num: number[] = values.slice(
+        0,
+        first_neg_num_index === -1 ? values.length : first_neg_num_index,
+    );
+    const sum_before_neg_num: number = values_before_neg_num.reduce(
+        (running_total: number, value: number): number => running_total + value,
+        0,
+    );
+    const injection_index: number =
+        first_neg_num_index === -1 ? values.length : first_neg_num_index + 1;
+    const injected_array: number[] = [...values];
+    injected_array.splice(injection_index, 0, sum_before_neg_num);
+
+    return injected_array;
 }
