@@ -4,7 +4,7 @@
  *      C = (F - 32) * 5/9
  */
 export function fahrenheitToCelius(temperature: number): number {
-    let celsius_temp: number = (((temperature - 32)*5)/9)
+    let celsius_temp: number = ((temperature - 32) * 5) / 9;
     return celsius_temp;
 }
 
@@ -14,8 +14,8 @@ export function fahrenheitToCelius(temperature: number): number {
  */
 export function add3(first: number, second: number, third: number): number {
     let sum: number = 0;
-    if (first>0){
-        sum+=first;
+    if (first > 0) {
+        sum += first;
     }
     if (second > 0) {
         sum += second;
@@ -50,11 +50,11 @@ export function isQuestion(message: string): boolean {
  */
 export function convertYesNo(word: string): boolean | null {
     let lowercased_word: string = word.toLowerCase();
-    if (lowercased_word === "yes"){
+    if (lowercased_word === "yes") {
         return true;
-    } else if (lowercased_word === "no"){
+    } else if (lowercased_word === "no") {
         return false;
-    } else{
+    } else {
         return null;
     }
 }
