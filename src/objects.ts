@@ -8,9 +8,18 @@ import { Question, QuestionType } from "./interfaces/question";
 export function makeBlankQuestion(
     id: number,
     name: string,
-    type: QuestionType
+    type: QuestionType,
 ): Question {
-    return {};
+    return {
+        id: id,
+        name: name,
+        body: "",
+        type: type,
+        options: [],
+        expected: "",
+        points: 1,
+        published: false,
+    };
 }
 
 /**
@@ -21,7 +30,9 @@ export function makeBlankQuestion(
  * HINT: Look up the `trim` and `toLowerCase` functions.
  */
 export function isCorrect(question: Question, answer: string): boolean {
-    return false;
+    const { expected } = question;
+    const lowercase_answer = answer.toLowerCase().trim();
+    return lowercase_answer === expected.toLowerCase().trim();
 }
 
 /**
@@ -31,6 +42,10 @@ export function isCorrect(question: Question, answer: string): boolean {
  * be exactly one of the options.
  */
 export function isValid(question: Question, answer: string): boolean {
+    const { type, options } = question;
+    if (type === "multiple_choice_question" && options.indexOf(answer) === -1) {
+        return false;
+    }
     return false;
 }
 
@@ -41,7 +56,8 @@ export function isValid(question: Question, answer: string): boolean {
  * name "My First Question" would become "9: My First Q".
  */
 export function toShortForm(question: Question): string {
-    return "";
+    const { id, name } = question;
+    return `${id}: ${name.slice(0, 10)}`;
 }
 
 /**
@@ -62,7 +78,13 @@ export function toShortForm(question: Question): string {
  * Check the unit tests for more examples of what this looks like!
  */
 export function toMarkdown(question: Question): string {
-    return "";
+    const { name, body, options, type } = question;
+    let marked_down_question = `# ${name}\n${body}`;
+    if (type === "multiple_choice_question") {
+        marked_down_question += `\n- `;
+        marked_down_question += options.join("\n- ");
+    }
+    return marked_down_question;
 }
 
 /**
@@ -70,7 +92,8 @@ export function toMarkdown(question: Question): string {
  * `newName`.
  */
 export function renameQuestion(question: Question, newName: string): Question {
-    return question;
+    const renamed_question = { ...question, name: newName };
+    return renamed_question;
 }
 
 /**
@@ -79,7 +102,9 @@ export function renameQuestion(question: Question, newName: string): Question {
  * published; if it was published, now it should be not published.
  */
 export function publishQuestion(question: Question): Question {
-    return question;
+    const { published } = question;
+    const inverted_question = { ...question, published: !published };
+    return inverted_question;
 }
 
 /**
@@ -89,7 +114,14 @@ export function publishQuestion(question: Question): Question {
  * The `published` field should be reset to false.
  */
 export function duplicateQuestion(id: number, oldQuestion: Question): Question {
-    return oldQuestion;
+    const { name } = oldQuestion;
+    const duplicated_question = {
+        ...oldQuestion,
+        name: `Copy of ${name}`,
+        published: false,
+        id: id,
+    };
+    return duplicated_question;
 }
 
 /**
@@ -100,7 +132,12 @@ export function duplicateQuestion(id: number, oldQuestion: Question): Question {
  * Check out the subsection about "Nested Fields" for more information.
  */
 export function addOption(question: Question, newOption: string): Question {
-    return question;
+    const { options } = question;
+    const question_with_new_option = {
+        ...question,
+        options: [...options, newOption],
+    };
+    return question_with_new_option;
 }
 
 /**
@@ -115,7 +152,14 @@ export function mergeQuestion(
     id: number,
     name: string,
     contentQuestion: Question,
-    { points }: { points: number }
+    { points }: { points: number },
 ): Question {
-    return contentQuestion;
+    const merged_question = {
+        ...contentQuestion,
+        points: points,
+        published: false,
+        id: id,
+        name: name,
+    };
+    return merged_question;
 }
