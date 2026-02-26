@@ -46,7 +46,7 @@ export function isValid(question: Question, answer: string): boolean {
     if (type === "multiple_choice_question" && options.indexOf(answer) === -1) {
         return false;
     }
-    return false;
+    return true;
 }
 
 /**
