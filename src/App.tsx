@@ -15,7 +15,7 @@ function App(): React.JSX.Element {
             </header>
             <hr></hr>
             <Counter></Counter>
-            <hr />
+            <hr />            
             <RevealAnswer></RevealAnswer>
             <hr />
             <StartAttempt></StartAttempt>
