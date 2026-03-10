@@ -17,6 +17,10 @@ export function ChooseTeam(): React.JSX.Element {
     function chooseMember(newMember: string) {
         if (!team.includes(newMember)) {
             setTeam([...team, newMember]);
+            const updated_options: string[] = allOptions.filter(
+                (person: string): boolean => person !== newMember,
+            );
+            setAllOptions(updated_options);
         }
     }
 
