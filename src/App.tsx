@@ -45,7 +45,7 @@ function App(): React.JSX.Element {
             <ShoveBox></ShoveBox>
             <hr></hr>
             <Counter></Counter>
-            <hr />            
+            <hr />
             <RevealAnswer></RevealAnswer>
             <hr />
             <StartAttempt></StartAttempt>
